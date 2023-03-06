@@ -17,28 +17,17 @@ defmodule RealWorldWeb do
   and import those modules here.
   """
 
+  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
+
   def controller do
     quote do
-      use Phoenix.Controller, namespace: RealWorldWeb
+      use Phoenix.Controller,
+        formats: [:json]
 
       import Plug.Conn
       import RealWorldWeb.Gettext
-      alias RealWorldWeb.Router.Helpers, as: Routes
-    end
-  end
 
-  def view do
-    quote do
-      use Phoenix.View,
-        root: "lib/real_world_web/templates",
-        namespace: RealWorldWeb
-
-      # Import convenience functions from controllers
-      import Phoenix.Controller,
-        only: [get_flash: 1, get_flash: 2, view_module: 1, view_template: 1]
-
-      # Include shared imports and aliases for views
-      unquote(view_helpers())
+      unquote(verified_routes())
     end
   end
 
@@ -58,14 +47,12 @@ defmodule RealWorldWeb do
     end
   end
 
-  defp view_helpers do
+  def verified_routes do
     quote do
-      # Import basic rendering functionality (render, render_layout, etc)
-      import Phoenix.View
-
-      import RealWorldWeb.ErrorHelpers
-      import RealWorldWeb.Gettext
-      alias RealWorldWeb.Router.Helpers, as: Routes
+      use Phoenix.VerifiedRoutes,
+        endpoint: RealWorldWeb.Endpoint,
+        router: RealWorldWeb.Router,
+        statics: RealWorldWeb.static_paths()
     end
   end
 

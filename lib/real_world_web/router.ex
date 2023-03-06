@@ -7,6 +7,16 @@ defmodule RealWorldWeb.Router do
 
   scope "/api", RealWorldWeb do
     pipe_through :api
+
+    post "/users", UserController, :create
+    post "/users/login", AuthController, :new
+  end
+
+  scope "/api", RealWorldWeb do
+    pipe_through [:api, RealWorldWeb.Auth.Pipeline]
+
+    get "/user", UserController, :get_current
+    put "/user", UserController, :update
   end
 
   # Enables LiveDashboard only for development

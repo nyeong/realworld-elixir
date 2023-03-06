@@ -7,6 +7,14 @@
 # General application configuration
 import Config
 
+config :real_world, RealWorldWeb.Auth,
+  issuer: :real_world,
+  secret_key: "LWjqk1Xzw5qYUhbdwq4eZWl/bN4CB+ueiD2Aat0VPTR4HpwDJTaE3YUK1XSOJLOf"
+
+config :real_world, RealWorldWeb.Auth.Pipeline,
+  module: RealWorldWeb.Auth,
+  error_handler: RealWorldWeb.Auth.ErrorHandler
+
 config :real_world,
   ecto_repos: [RealWorld.Repo]
 
