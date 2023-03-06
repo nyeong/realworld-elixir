@@ -15,11 +15,11 @@ defmodule RealWorldWeb.AuthController do
       |> put_view(json: RealWorldWeb.UserJSON)
       |> render(:show, user: user)
     else
-      {:error, _} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> put_view(json: RealWorldWeb.ErrorJSON)
-        |> render(:"422")
+      {:error, :not_found} ->
+        {:error, :unprocessable_entity}
+
+      {:error, :invalid} ->
+        {:error, :unprocessable_entity}
     end
   end
 end

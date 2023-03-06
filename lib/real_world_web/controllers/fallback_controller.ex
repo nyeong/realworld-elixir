@@ -21,4 +21,11 @@ defmodule RealWorldWeb.FallbackController do
     |> put_view(json: RealWorldWeb.ErrorJSON)
     |> render(:"404")
   end
+
+  def call(conn, {:error, :unprocessable_entity}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> put_view(json: RealWorldWeb.ErrorJSON)
+    |> render(:"422")
+  end
 end
