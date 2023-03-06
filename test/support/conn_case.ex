@@ -24,7 +24,7 @@ defmodule RealWorldWeb.ConnCase do
       import Phoenix.ConnTest
       import RealWorldWeb.ConnCase
 
-      alias RealWorldWeb.Router.Helpers, as: Routes
+      use RealWorldWeb, :verified_routes
 
       # The default endpoint for testing
       @endpoint RealWorldWeb.Endpoint
